@@ -1,0 +1,130 @@
+$green-color: #4C860E;
+$header-color-from: #ECEAD1;
+$header-color-to: #C7C7A5;
+.container {
+	border: solid #E6E7DF 1px;
+	-webkit-box-shadow: 1px 1px 5px #E6E7DF;
+	-moz-box-shadow: 1px 1px 5px #E6E7DF;
+	box-shadow: 1px 1px 5px #E6E7DF;
+	
+	.collapsiblePanel {
+		background: #C7C7A5; /* For browsers that do not support gradients */
+		background: -webkit-linear-gradient(left, $header-color-from, $header-color-to); /* For Safari 5.1 to 6.0 */
+		background: -o-linear-gradient(right, $header-color-from, $header-color-to); /* For Opera 11.1 to 12.0 */
+		background: -moz-linear-gradient(right, $header-color-from, $header-color-to); /* For Firefox 3.6 to 15 */
+		background: linear-gradient(to right, $header-color-from, $header-color-to); /* Standard syntax (must be last) */
+		position: relative;
+		padding: 1px 20px;
+		H1 { 
+			
+			font-size: 14px;
+			> SPAN {
+				color: $green-color;
+				padding-right: 8px;
+			}
+		}
+		A.collapsibleButton {
+			position: absolute;
+			color: $green-color;
+			right: 12px;
+			top: 10px;
+		}
+	}
+	
+	.example-appear {
+	   opacity: 0.01;
+	}
+
+	.example-appear.example-appear-active {
+	   opacity: 1;
+	   transition: opacity 500ms ease-in;
+	}
+
+	.accordion-content{
+	  -webkit-transition: max-height 0.5s; 
+	  -moz-transition: max-height 0.5s; 
+	  -ms-transition: max-height 0.5s; 
+	  -o-transition: max-height 0.5s; 
+	  transition: max-height 0.5s;  
+	  overflow: hidden;
+	  // "height: 0" not work with css transitions
+	  max-height: 1000px;
+	}
+
+
+	UL.sliders {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		
+		LI {
+			display: none;
+			&.current {
+				display: block;
+			}
+			.slider {
+				display: table;
+				border-top: solid #E6E7DF 1px;
+				border-bottom: solid #E6E7DF 1px;
+				padding: 10px;
+				> DIV {
+					vertical-align: middle;
+				}    
+				.img {
+					width: 30%;
+					display: table-cell;
+				
+					IMG {
+						width: 100%;
+					}
+				}
+				.description {
+					display: table-cell;
+					padding-left: 10px;
+				}
+			}
+		}
+	}
+
+	.sliderNavigation {
+		display: table;
+		width: 100%;
+		A {color: $green-color;}
+		> SPAN {
+			padding: 10px;
+			display: table-cell;
+			&.next {
+				text-align: right;
+				position: relative;
+				padding-right: 20px;
+				
+				> A {
+					padding-right: 8px;
+				}
+				> .fa {
+					font-size: 2em;
+					color: $green-color;
+					position: absolute;
+					top: 4px;
+				}
+			}
+			
+			&.back {
+				position: relative;
+				padding-left: 20px;
+				
+				> A {
+					padding-left: 20px;
+				}
+				> .fa {
+					font-size: 2em;
+					color: $green-color;
+					position: absolute;
+					top: 4px;
+				}
+			}
+		}
+	    
+		
+	}
+}
