@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class App extends React.Component {
   
@@ -12,22 +13,8 @@ class App extends React.Component {
             }
         };
 		
-		this.handleBackClick = this.handleBackClick.bind(this);
-		this.handleNextClick = this.handleNextClick.bind(this);
 		this.onCollapsibleClicked = this.onCollapsibleClicked.bind(this);
     };
-
-	handleBackClick() {
-		this.setState(prevState => ({
-		  currentSlide: prevState.data.content[prevState.currentSlide.key -2]
-		}));
-	}
-  
-  	handleNextClick() {
-		this.setState(prevState => ({
-		  currentSlide: prevState.data.content[prevState.currentSlide.key]
-		}));
-	}
 	
 	onCollapsibleClicked() {
 		this.setState(prevState => ({
@@ -47,18 +34,26 @@ class App extends React.Component {
 						
 						if (json.content.length > 0)
 						{
-							this.setState({isCollapsed: false, currentSlide: json.content[0], data: json});
+							let slideIndex = this.props.params.slideIndex;
+							let currentSlideIndex = (!isNaN(parseFloat(slideIndex)) && isFinite(slideIndex))? slideIndex - 1: 0;
+							this.setState({isCollapsed: false, currentSlide: json.content[currentSlideIndex], data: json});
 						}
                    });
     };
 
+	componentWillReceiveProps(newProps) {    
+		let slideIndex = newProps.params.slideIndex;
+		let currentSlideIndex = (!isNaN(parseFloat(slideIndex)) && isFinite(slideIndex))? slideIndex - 1: 0;
+		this.setState(prevState => ({
+			currentSlide: prevState.data.content[currentSlideIndex]
+		}));
+    }
+   
    render() {
       return (
          <div className="container">
-		 
             <CollapsiblePanel title={this.state.data.title} isCollapsed={this.state.isCollapsed} onCollapsibleClicked={this.onCollapsibleClicked} />
             <SilderContentList datalist={this.state.data.content} currentSlide={this.state.currentSlide} 
-				nextButtonClick={this.handleNextClick} backButtonClick={this.handleBackClick} 
 				isCollapsed={this.state.isCollapsed}
 			/>
            
@@ -85,7 +80,7 @@ class SilderContentList extends React.Component {
 	 let current = this.props.currentSlide;
 	 
       return (
-<div>
+			<div>
 				<div className="accordion-content" style={{'maxHeight': this.props.isCollapsed ? '0px' : '1000px' }} >	
                 <ul className="sliders">
 				{
@@ -133,12 +128,12 @@ class ContentSliderNavigation extends React.Component {
 		let currentSlideKey = this.props.currentSlide.key;
 		let numberOfSlides = this.props.datalist.length;
 		let nextLink = <span className="next" >
-							<a href="javascript:;" onClick={this.props.nextButtonClick}>{this.props.currentSlide.title}</a>
+							<Link to={"/slide/" + (currentSlideKey + 1)}>{this.props.currentSlide.title}</Link>
 							<i className="fa fa-caret-right"></i>
 						</span>;
 		let backLink = <span className="back">
 						<i className="fa fa-caret-left"></i>
-						<a href="javascript:;" onClick={this.props.backButtonClick}>Prev</a>
+						<Link to={"/slide/" + (currentSlideKey - 1)}>Prev</Link>
 					</span>;			
 		if (this.props.currentSlide.key === undefined || numberOfSlides <= 0) return (<div></div>);
 		
