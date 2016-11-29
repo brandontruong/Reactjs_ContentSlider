@@ -9,7 +9,7 @@ export default class SliderContentList extends React.Component {
 
     return (
       <div>
-        <div className="accordion-content" style={{'maxHeight': this.props.isCollapsed ? '0px' : '1000px' }} >  
+        <div className={"accordion-content " + (this.props.isCollapsed ? 'slide-up' : '')}>  
           <ul className="sliders">
             {
               this.props.datalist.map(function(item, index) {
